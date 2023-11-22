@@ -10,9 +10,9 @@ void main() {
         home: SmartSearchDropdown(
           controller: TextEditingController(),
           items: [
-            CustomDropDownItem(value: '1', description: 'Item 1'),
-            CustomDropDownItem(value: '2', description: 'Item 2'),
-            CustomDropDownItem(value: '3', description: 'Item 3'),
+            SmartSearchDropdownItem(value: '1', description: 'Item 1'),
+            SmartSearchDropdownItem(value: '2', description: 'Item 2'),
+            SmartSearchDropdownItem(value: '3', description: 'Item 3'),
           ],
           selectedItem: '2',
         ),
@@ -30,9 +30,9 @@ void main() {
         home: SmartSearchDropdown(
           controller: controller,
           items: [
-            CustomDropDownItem(value: '1', description: 'Item 1'),
-            CustomDropDownItem(value: '2', description: 'Item 2'),
-            CustomDropDownItem(value: '3', description: 'Item 3'),
+            SmartSearchDropdownItem(value: '1', description: 'Item 1'),
+            SmartSearchDropdownItem(value: '2', description: 'Item 2'),
+            SmartSearchDropdownItem(value: '3', description: 'Item 3'),
           ],
           selectedItem: '2',
         ),

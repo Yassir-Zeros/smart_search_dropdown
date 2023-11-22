@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 
+//ignore: must_be_immutable
 class SmartSearchDropdown extends StatefulWidget {
   final String labelText;
   final Color labelColor;
   final Color? iconsColor;
+  final Widget notFoundWidget;
   final Color hintColor;
   final Color backgroundColor;
   final Color selectedItemColor;
   final bool isLoading;
   final double fontSize;
+  final double borderRadius;
   final bool enableSearching;
-  final TextEditingController controller;
-  final List<CustomDropDownItem> items;
-  String selectedItem;
-  final void Function(CustomDropDownItem)? onItemSelected;
+  late TextEditingController controller;
+  final List<SmartSearchDropdownItem> items;
+  late String selectedItem;
+  final void Function(SmartSearchDropdownItem)? onItemSelected;
 
   SmartSearchDropdown({
     Key? key,
@@ -22,14 +25,16 @@ class SmartSearchDropdown extends StatefulWidget {
     this.labelText = 'Search',
     this.labelColor = Colors.black45,
     this.hintColor = Colors.black45,
+    this.notFoundWidget = const Text('Not Found'),
     this.iconsColor,
-    this.backgroundColor = const Color(0xfff3f7fa),
+    this.backgroundColor = Colors.white,
     this.selectedItemColor = Colors.blue,
     required this.controller,
     required this.items,
     required this.selectedItem,
     this.onItemSelected,
     this.isLoading = false,
+    this.borderRadius = 4,
   }) : super(key: key);
 
   @override
@@ -38,8 +43,8 @@ class SmartSearchDropdown extends StatefulWidget {
 
 class SmartSearchDropdownState extends State<SmartSearchDropdown> {
   bool dropDownIsShown = false;
-  List<CustomDropDownItem> combinedListArticles = [];
-  List<CustomDropDownItem> myItems = [];
+  List<SmartSearchDropdownItem> combinedListArticles = [];
+  List<SmartSearchDropdownItem> myItems = [];
   int selectedIndex = 0;
   @override
   void initState() {
@@ -126,78 +131,75 @@ class SmartSearchDropdownState extends State<SmartSearchDropdown> {
           visible: dropDownIsShown,
           child: Container(
             margin:
-                const EdgeInsets.only(left: 5, right: 5, bottom: 5, top: 10),
+            const EdgeInsets.only(left: 4, right: 4, bottom: 5, top: 10),
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.white, width: 2),
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.black26,
-                  offset: Offset(0, 2.5),
-                  blurRadius: 4,
-                ),
+              boxShadow: [
                 BoxShadow(
                   color: Colors.black12,
-                  offset: Offset(-0.2, 0),
-                  blurRadius: 4,
+                  blurStyle: BlurStyle.outer,
+                  blurRadius: widget.borderRadius,
                 ),
               ],
               color: widget.backgroundColor,
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(4),
             ),
             height: myItems.isNotEmpty
                 ? (myItems.length * 55 <= height * 0.325
-                ? myItems.length == 1? myItems.length*68:myItems.length * 65
+                ? myItems.length == 1
+                ? myItems.length * 68
+                : myItems.length * 65
                 : height * 0.325)
                 : null,
             child: myItems.isEmpty
                 ? const Center(
-                    child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text('Not Found'),
-                  ))
+                child: Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text('Not Found'),
+                ))
                 : ListView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: myItems.length,
-                    itemBuilder: (context, index) {
-                      var item = myItems[index];
-                      return InkWell(
-                        onTap: () {
-                          if (widget.onItemSelected != null) {
-                            widget.onItemSelected!(item);
-                          }
-                          widget.selectedItem = item.value;
-                          widget.controller.text = item.description;
-                          selectedIndex = index;
-                          dropDownIsShown = false;
-                          setState(() {});
-                        },
-                        child: Container(
-                          width: width,
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 5, vertical: 5),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.white, width: 1.6),
-                            borderRadius: BorderRadius.circular(8),
-                            color: selectedIndex == index
-                                ? widget.selectedItemColor
-                                : Colors.transparent,
-                          ),
-                          padding: const EdgeInsets.all(16),
-                          child: Text(
-                            item.description,
-                            style: TextStyle(
-                              fontSize: widget.fontSize,
-                              overflow: TextOverflow.ellipsis,
-                              color: selectedIndex == index
-                                  ? Colors.white
-                                  : Colors.black87,
-                            ),
-                          ),
-                        ),
-                      );
-                    },
+              padding: const EdgeInsets.only(top: 7),
+              physics: const BouncingScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: myItems.length,
+              itemBuilder: (context, index) {
+                var item = myItems[index];
+                return InkWell(
+                  onTap: () {
+                    if (widget.onItemSelected != null) {
+                      widget.onItemSelected!(item);
+                    }
+                    widget.selectedItem = item.value;
+                    widget.controller.text = item.description;
+                    selectedIndex = index;
+                    dropDownIsShown = false;
+                    setState(() {});
+                  },
+                  child: Container(
+                    width: width,
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 5, vertical: 1),
+                    decoration: BoxDecoration(
+                      //border: Border.all(color: widget.selectedItemColor.withOpacity(0.5),width: 0.5),
+                      borderRadius: BorderRadius.circular(4),
+                      color: selectedIndex == index
+                          ? widget.selectedItemColor
+                          : Colors.transparent,
+                    ),
+                    padding: const EdgeInsets.all(16),
+                    child: Text(
+                      item.description,
+                      style: TextStyle(
+                        fontSize: widget.fontSize,
+                        overflow: TextOverflow.ellipsis,
+                        color: selectedIndex == index
+                            ? Colors.white
+                            : Colors.black87,
+                      ),
+                    ),
                   ),
+                );
+              },
+            ),
           ),
         ),
       ],
@@ -210,7 +212,7 @@ class SmartSearchDropdownState extends State<SmartSearchDropdown> {
         myItems = widget.items;
       });
     } else {
-      List<CustomDropDownItem> dataFilter = widget.items
+      List<SmartSearchDropdownItem> dataFilter = widget.items
           .where((data) =>
               data.value
                   .toString()
@@ -228,11 +230,11 @@ class SmartSearchDropdownState extends State<SmartSearchDropdown> {
   }
 }
 
-class CustomDropDownItem {
+class SmartSearchDropdownItem {
   final String value;
   final String description;
 
-  CustomDropDownItem({
+  SmartSearchDropdownItem({
     required this.value,
     required this.description,
   });

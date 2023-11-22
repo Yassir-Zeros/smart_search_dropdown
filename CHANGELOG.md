@@ -20,25 +20,6 @@ All notable changes to the "smart_search_dropdown" Flutter package will be docum
 
 - None
 
-## [0.0.1] - 2023-11-07
-
-### Added
-
-- Initial project setup.
-
-## [Unreleased]
-
-### Added
-
-- Support for new features or enhancements.
-
-### Changed
-
-- Modifications or improvements to existing features.
-
-### Removed
-
-- Deprecated or unnecessary features.
 
 ## [0.0.2] - 2023-11-07
 
@@ -53,3 +34,32 @@ All notable changes to the "smart_search_dropdown" Flutter package will be docum
 ### Removed
 
 - Deprecated or unnecessary features.
+
+## [0.0.3] - 2023-11-07
+
+### Added
+
+- None
+
+### Changed
+
+- modify dimension sizes
+
+### Removed
+
+- Deprecated or unnecessary features.
+
+## [0.0.4] - 2023-11-07
+
+### Added
+
+- some params
+
+### Changed
+
+- modify display look
+
+### Removed
+
+- Deprecated or unnecessary features.
+

@@ -1,7 +1,10 @@
 name: smart_search_dropdown
-description: A Cool Search Selector.
-version: 0.0.2
+description: A customizable Flutter dropdown with search functionality.
+version: 0.0.4
 homepage: https://github.com/Yassir-Zeros/smart_search_dropdown.git
+
+example:
+  main: example/main.dart
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
