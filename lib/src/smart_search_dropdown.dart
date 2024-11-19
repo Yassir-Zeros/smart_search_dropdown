@@ -131,7 +131,7 @@ class SmartSearchDropdownState extends State<SmartSearchDropdown> {
           visible: dropDownIsShown,
           child: Container(
             margin:
-            const EdgeInsets.only(left: 4, right: 4, bottom: 5, top: 10),
+                const EdgeInsets.only(left: 4, right: 4, bottom: 5, top: 10),
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
@@ -145,61 +145,61 @@ class SmartSearchDropdownState extends State<SmartSearchDropdown> {
             ),
             height: myItems.isNotEmpty
                 ? (myItems.length * 55 <= height * 0.325
-                ? myItems.length == 1
-                ? myItems.length * 68
-                : myItems.length * 65
-                : height * 0.325)
+                    ? myItems.length == 1
+                        ? myItems.length * 68
+                        : myItems.length * 65
+                    : height * 0.325)
                 : null,
             child: myItems.isEmpty
                 ? const Center(
-                child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text('Not Found'),
-                ))
+                    child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text('Not Found'),
+                  ))
                 : ListView.builder(
-              padding: const EdgeInsets.only(top: 7),
-              physics: const BouncingScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: myItems.length,
-              itemBuilder: (context, index) {
-                var item = myItems[index];
-                return InkWell(
-                  onTap: () {
-                    if (widget.onItemSelected != null) {
-                      widget.onItemSelected!(item);
-                    }
-                    widget.selectedItem = item.value;
-                    widget.controller.text = item.description;
-                    selectedIndex = index;
-                    dropDownIsShown = false;
-                    setState(() {});
-                  },
-                  child: Container(
-                    width: width,
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 5, vertical: 1),
-                    decoration: BoxDecoration(
-                      //border: Border.all(color: widget.selectedItemColor.withOpacity(0.5),width: 0.5),
-                      borderRadius: BorderRadius.circular(4),
-                      color: selectedIndex == index
-                          ? widget.selectedItemColor
-                          : Colors.transparent,
-                    ),
-                    padding: const EdgeInsets.all(16),
-                    child: Text(
-                      item.description,
-                      style: TextStyle(
-                        fontSize: widget.fontSize,
-                        overflow: TextOverflow.ellipsis,
-                        color: selectedIndex == index
-                            ? Colors.white
-                            : Colors.black87,
-                      ),
-                    ),
+                    padding: const EdgeInsets.only(top: 7),
+                    physics: const BouncingScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: myItems.length,
+                    itemBuilder: (context, index) {
+                      var item = myItems[index];
+                      return InkWell(
+                        onTap: () {
+                          if (widget.onItemSelected != null) {
+                            widget.onItemSelected!(item);
+                          }
+                          widget.selectedItem = item.value;
+                          widget.controller.text = item.description;
+                          selectedIndex = index;
+                          dropDownIsShown = false;
+                          setState(() {});
+                        },
+                        child: Container(
+                          width: width,
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 5, vertical: 1),
+                          decoration: BoxDecoration(
+                            //border: Border.all(color: widget.selectedItemColor.withOpacity(0.5),width: 0.5),
+                            borderRadius: BorderRadius.circular(4),
+                            color: selectedIndex == index
+                                ? widget.selectedItemColor
+                                : Colors.transparent,
+                          ),
+                          padding: const EdgeInsets.all(16),
+                          child: Text(
+                            item.description,
+                            style: TextStyle(
+                              fontSize: widget.fontSize,
+                              overflow: TextOverflow.ellipsis,
+                              color: selectedIndex == index
+                                  ? Colors.white
+                                  : Colors.black87,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
                   ),
-                );
-              },
-            ),
           ),
         ),
       ],
